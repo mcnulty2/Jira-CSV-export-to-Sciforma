@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.mcnulty2.timesaver</groupId>
+    <artifactId>jira-to-sciforma</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.10</version>
+    </parent>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <selenide.version>6.7.0</selenide.version>
+        <commons-text.version>1.8</commons-text.version>
+        <commons-configuration2.version>2.8.0</commons-configuration2.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <junit-jupiter-engine.version>5.9.1</junit-jupiter-engine.version>
+        <lombok.version>1.18.24</lombok.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
+        <slf4j-simple.version>2.0.7</slf4j-simple.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${commons-text.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>${commons-configuration2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter-engine.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>${releaseRepositoryId}</id>
+            <name>${releaseRepositoryName}</name>
+            <url>${releaseRepositoryUrl}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${snapshotRepositoryId}</id>
+            <name>${snapshotRepositoryName}</name>
+            <uniqueVersion>true</uniqueVersion>
+            <url>${snapshotRepositoryUrl}</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>maven-public</id>
+            <name>Maven Public Group</name>
+            <url>https://repo.bit.admin.ch/repository/maven-public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven-public</id>
+            <name>Maven Public Group</name>
+            <url>https://repo.bit.admin.ch/repository/maven-public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
