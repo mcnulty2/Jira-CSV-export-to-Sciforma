@@ -1,7 +1,6 @@
 package com.github.mcnulty2.timesaver;
 
 import com.github.mcnulty2.timesaver.exception.JiraToSciformaException;
-import com.github.mcnulty2.timesaver.importer.SelenideImporter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

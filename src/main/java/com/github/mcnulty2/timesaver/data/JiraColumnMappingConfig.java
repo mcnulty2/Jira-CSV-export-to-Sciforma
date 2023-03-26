@@ -8,11 +8,15 @@ import org.springframework.context.annotation.PropertySource;
 
 @Getter
 @Setter
-@PropertySource("classpath:sciforma.properties")
-@ConfigurationProperties(prefix = "sciforma")
+@PropertySource("classpath:jira_column.properties")
+@ConfigurationProperties(prefix = "jira.column")
 @Configuration
-public class SciformaData {
-    private String url;
-    private String user;
-    private String password;
+public class JiraColumnMappingConfig {
+    private Integer issue;
+    private Integer time;
+    private Integer date;
+    private Integer project;
+
+    private String separator;
 }
+
