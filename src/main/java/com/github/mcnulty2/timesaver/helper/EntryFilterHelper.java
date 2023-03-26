@@ -26,6 +26,7 @@ public class EntryFilterHelper {
     public String getList(String project, LocalDate date, String delimiter) {
         return filterByDateAndProject(project, date)
                 .map(e -> e.getIssue())
+                .distinct()
                 .collect(Collectors.joining(delimiter));
     }
 

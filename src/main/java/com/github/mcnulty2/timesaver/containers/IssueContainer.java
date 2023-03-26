@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.github.mcnulty2.timesaver.data.EnumTranslations;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,7 +27,8 @@ public class IssueContainer {
         SelenideElement monday = topContainer.find(By.xpath(".//div[contains(text(), '" + weeklyDates.get(0).getDayOfMonth() + "')]"));
         SelenideElement notesTd = monday.ancestor("td").sibling(1);
         for (String issue: weeklyIssues) {
-            notesTd.sendKeys(issue);
+            Actions a = new Actions(notesTd.getWrappedDriver());
+            a.sendKeys(notesTd, issue).build().perform();
             notesTd = notesTd.ancestor("tr").sibling(0).find("td").sibling(1);
         }
         SelenideElement popup = $(By.id("popup-container"));

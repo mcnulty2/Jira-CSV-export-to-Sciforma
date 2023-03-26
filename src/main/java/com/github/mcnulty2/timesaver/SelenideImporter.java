@@ -44,10 +44,9 @@ public class SelenideImporter {
         open(sciformaConfig.getUrl());
         Thread.sleep(2000);
         LanguageContainer.setLanguage(sciformaConfig.getLanguage());
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         LoginContainer.login(sciformaConfig.getUser(), sciformaConfig.getPassword());
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
-        Thread.sleep(10000);
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage()));
         projectMappingConfig.getUniqueProjects().forEach(
                 p -> {
