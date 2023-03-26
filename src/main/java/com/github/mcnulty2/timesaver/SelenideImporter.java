@@ -3,6 +3,7 @@ package com.github.mcnulty2.timesaver;
 import com.codeborne.selenide.Configuration;
 import com.github.mcnulty2.timesaver.containers.DatesContainer;
 import com.github.mcnulty2.timesaver.containers.HoursContainer;
+import com.github.mcnulty2.timesaver.containers.IssueContainer;
 import com.github.mcnulty2.timesaver.containers.LanguageContainer;
 import com.github.mcnulty2.timesaver.containers.LoginContainer;
 import com.github.mcnulty2.timesaver.data.EnumTranslations;
@@ -46,10 +47,12 @@ public class SelenideImporter {
         Thread.sleep(5000);
         LoginContainer.login(sciformaConfig.getUser(), sciformaConfig.getPassword());
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
+        Thread.sleep(10000);
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage()));
         projectMappingConfig.getUniqueProjects().forEach(
                 p -> {
-                    HoursContainer.logHoursForProject(p, filter.getWeeklyTimes(p, sciformaConfig.getDates()));
+                    HoursContainer.logHoursForProject(p, filter.getWeeklyTimes(p, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
+                    IssueContainer.logIssuesForProject(p, filter.getWeeklyIssues(p, sciformaConfig.getDates(), sciformaConfig.getDelimiter()), sciformaConfig.getDates(), sciformaConfig.getLanguage());
                 }
         );
         Thread.sleep(100000);

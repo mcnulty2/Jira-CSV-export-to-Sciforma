@@ -28,4 +28,12 @@ public class SciformaConfig {
     public String getLanguage() {
         return locale.substring(0, 2);
     }
+
+    public String getLocaleDecimalSeparator() {
+        if (locale.contains("_us")) {
+            return ".";
+        } else {
+            return ",";
+        }
+    }
 }

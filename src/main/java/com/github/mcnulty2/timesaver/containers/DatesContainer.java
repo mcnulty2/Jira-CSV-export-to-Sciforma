@@ -21,7 +21,7 @@ public class DatesContainer {
         List<LocalDate> week = new ArrayList<>();
         String monday = $(By.xpath("//div[contains(text(), '" + EnumTranslations.TOTAL.getText(language) + "')]"))
                 .parent().preceding(6).innerText().substring(3);
-        LocalDate mondayDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), Integer.valueOf(monday));
+        LocalDate mondayDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), Integer.valueOf(monday.strip()));
         week.add(mondayDate);
         week.add(mondayDate.plusDays(1));
         week.add(mondayDate.plusDays(2));

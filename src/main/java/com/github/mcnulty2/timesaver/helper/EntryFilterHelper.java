@@ -29,10 +29,22 @@ public class EntryFilterHelper {
                 .collect(Collectors.joining(delimiter));
     }
 
-    public List<BigDecimal> getWeeklyTimes(String project, List<LocalDate> week) {
-        List<BigDecimal> weeklyTimes = new ArrayList<>();
-        week.forEach(d -> weeklyTimes.add(getTime(project, d).setScale(2, RoundingMode.HALF_UP)));
+    public List<String> getWeeklyTimes(String project, List<LocalDate> week, String decimalSeparator) {
+        List<String> weeklyTimes = new ArrayList<>();
+        week.forEach(d -> {
+            String time = getTime(project, d).setScale(2, RoundingMode.HALF_UP).toString();
+            weeklyTimes.add(time.replace(".", decimalSeparator));
+        });
         return weeklyTimes;
+    }
+
+    public List<String> getWeeklyIssues(String project, List<LocalDate> week, String delimiter) {
+        List<String> weeklyIssues = new ArrayList<>();
+        week.forEach(d -> {
+            String dailyIssues = getList(project, d, delimiter);
+            weeklyIssues.add(dailyIssues);
+        });
+        return weeklyIssues;
     }
 
     private Stream<JiraBean> filterByDateAndProject(String project, LocalDate date) {
