@@ -24,6 +24,7 @@ public class SciformaConfig {
     private SubmitType submit;
     private String locale;
     private List<LocalDate> dates;
+    private String browser;
 
     public String getLanguage() {
         return locale.substring(0, 2);

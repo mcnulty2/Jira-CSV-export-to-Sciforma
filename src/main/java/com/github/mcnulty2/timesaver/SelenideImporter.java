@@ -36,6 +36,7 @@ public class SelenideImporter {
 
         Configuration.browserSize = "1920x1080";
         Configuration.timeout = 10000;
+        Configuration.browser = sciformaConfig.getBrowser();
     }
 
     public void importDataIntoSciforma(File file) throws Exception {
@@ -44,8 +45,9 @@ public class SelenideImporter {
         open(sciformaConfig.getUrl());
         Thread.sleep(2000);
         LanguageContainer.setLanguage(sciformaConfig.getLanguage());
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         LoginContainer.login(sciformaConfig.getUser(), sciformaConfig.getPassword());
+        Thread.sleep(2000);
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage()));
         projectMappingConfig.getUniqueProjects().forEach(

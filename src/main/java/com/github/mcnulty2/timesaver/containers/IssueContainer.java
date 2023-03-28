@@ -33,6 +33,11 @@ public class IssueContainer {
         }
         SelenideElement popup = $(By.id("popup-container"));
         log.info(popup.innerText());
-        popup.find(By.xpath(".//button[contains(text(), '" + EnumTranslations.CLOSE.getText(language) + "')]")).click();
+        SelenideElement close = popup.find(By.xpath(".//button[contains(text(), '" + EnumTranslations.CLOSE.getText(language) + "')]"));
+        if (close.exists()) {
+            close.click();
+        } else {
+            popup.find(By.xpath(".//button[contains(text(), '" + EnumTranslations.OK.getText(language) + "')]")).click();
+        }
     }
 }

@@ -3,8 +3,9 @@ package com.github.mcnulty2.timesaver.data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +21,9 @@ public class ProjectMappingConfig {
     private List<String> uniqueProjects;
 
     public ProjectMappingConfig() throws IOException {
-        String propertiesPath = Thread.currentThread().getContextClassLoader().getResource("").getPath()
-                + PROJECT_MAPPING_PROPERTIES;
+        Resource resource = new ClassPathResource(PROJECT_MAPPING_PROPERTIES);
         Properties projectProps = new Properties();
-        projectProps.load(new FileInputStream(propertiesPath));
+        projectProps.load(resource.getInputStream());
         projectMap = (Map)projectProps;
         uniqueProjects = projectMap.values().stream()
                 .distinct().collect(Collectors.toList());

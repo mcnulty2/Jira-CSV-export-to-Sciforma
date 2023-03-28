@@ -4,7 +4,8 @@ public enum EnumTranslations {
     TIMESHEET("Timesheet", "Stundenzettel", "Feuille de temps"),
     TOTAL("Total", "Gesamt", "Total"),
     DAILY_NOTES("Daily Notes", "Tagesnotizen", "Notes journalières"),
-    CLOSE("Close", "Schließen", "Fermer");
+    CLOSE("Close", "Schließen", "Fermer"),
+    OK("OK", "OK", "OK");
 
 
     private String textEn;
