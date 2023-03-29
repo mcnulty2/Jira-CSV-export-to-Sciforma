@@ -3,6 +3,8 @@ package com.github.mcnulty2.timesaver.processing;
 import com.github.mcnulty2.timesaver.data.JiraBean;
 import com.github.mcnulty2.timesaver.data.JiraColumnMappingConfig;
 import com.github.mcnulty2.timesaver.data.ProjectMappingConfig;
+import com.github.mcnulty2.timesaver.exception.JiraToSciformaException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -36,7 +38,12 @@ public class CsvParser {
                 jiraBean.setIssue(columns[jiraColumnMappingConfig.getIssue()]);
                 jiraBean.setTime(new BigDecimal(columns[jiraColumnMappingConfig.getTime()]));
                 jiraBean.setDate(LocalDate.parse(columns[jiraColumnMappingConfig.getDate()].substring(0, 10)));
-                jiraBean.setProject(projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]));
+                String project = projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]);
+                if (StringUtils.isEmpty(project)) {
+                    throw new JiraToSciformaException("Componemt not set for: " + jiraBean.getIssue());
+                } else {
+                    jiraBean.setProject(projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]));
+                }
                 list.add(jiraBean);
             }
         }
