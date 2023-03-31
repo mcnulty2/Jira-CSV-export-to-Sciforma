@@ -35,7 +35,7 @@ public class SelenideImporter {
         this.projectMappingConfig = projectMappingConfig;
 
         Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 10000;
+        Configuration.timeout = 30000;
         Configuration.browser = sciformaConfig.getBrowser();
     }
 
@@ -50,12 +50,11 @@ public class SelenideImporter {
         Thread.sleep(2000);
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage()));
-        projectMappingConfig.getUniqueProjects().forEach(
-                p -> {
-                    HoursContainer.logHoursForProject(p, filter.getWeeklyTimes(p, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
-                    IssueContainer.logIssuesForProject(p, filter.getWeeklyIssues(p, sciformaConfig.getDates(), sciformaConfig.getDelimiter()), sciformaConfig.getDates(), sciformaConfig.getLanguage());
-                }
-        );
-        Thread.sleep(100000);
+        for (String project: projectMappingConfig.getUniqueProjects()) {
+            HoursContainer.logHoursForProject(project, filter.getWeeklyTimes(project, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
+            IssueContainer.logIssuesForProject(project, filter.getWeeklyIssues(project, sciformaConfig.getDates(), sciformaConfig.getDelimiter()), sciformaConfig.getDates(), sciformaConfig.getLanguage());
+            Thread.sleep(2000);
+        }
+        Thread.sleep(200000);
     }
 }

@@ -16,12 +16,19 @@ public class HoursContainer {
         // No public Constructor
     }
 
-    public static void logHoursForProject(String project, List<String> weeklyTimes) {
+    public static void logHoursForProject(String project, List<String> weeklyTimes) throws InterruptedException {
         SelenideElement day = $(By.xpath("//div[contains(text(), '" + project + "')]"))
                 .ancestor("tr").sibling(0).find(By.tagName("td")).sibling(1);
+        while (!day.exists() || !day.isDisplayed()) {
+            Thread.sleep(2000);
+        }
         for (String hoursForDay: weeklyTimes) {
-            Actions a = new Actions(day.getWrappedDriver());
-            a.sendKeys(day, hoursForDay).build().perform();
+            if (!hoursForDay.replace(",", ".").equals("0.00")) {
+                Actions a = new Actions(day.getWrappedDriver());
+                while(!day.find("input").exists() || !day.find("input").attr("value").equals(hoursForDay)) {
+                    a.sendKeys(day, hoursForDay).build().perform();
+                }
+            }
             day = day.sibling(0);
         }
     }

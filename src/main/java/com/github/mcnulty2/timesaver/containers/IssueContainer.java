@@ -3,6 +3,7 @@ package com.github.mcnulty2.timesaver.containers;
 import com.codeborne.selenide.SelenideElement;
 import com.github.mcnulty2.timesaver.data.EnumTranslations;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 
@@ -27,12 +28,13 @@ public class IssueContainer {
         SelenideElement monday = topContainer.find(By.xpath(".//div[contains(text(), '" + weeklyDates.get(0).getDayOfMonth() + "')]"));
         SelenideElement notesTd = monday.ancestor("td").sibling(1);
         for (String issue: weeklyIssues) {
-            Actions a = new Actions(notesTd.getWrappedDriver());
-            a.sendKeys(notesTd, issue).build().perform();
+            if (StringUtils.isNotEmpty(issue)) {
+                Actions a = new Actions(notesTd.getWrappedDriver());
+                a.sendKeys(notesTd, issue).build().perform();
+            }
             notesTd = notesTd.ancestor("tr").sibling(0).find("td").sibling(1);
         }
         SelenideElement popup = $(By.id("popup-container"));
-        log.info(popup.innerText());
         SelenideElement close = popup.find(By.xpath(".//button[contains(text(), '" + EnumTranslations.CLOSE.getText(language) + "')]"));
         if (close.exists()) {
             close.click();

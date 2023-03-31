@@ -54,7 +54,9 @@ public class ImportJiraTimesheetApplication implements CommandLineRunner {
         }
         Optional<Path> pathOfMostRecentFile = paths.stream()
                 .max(Comparator.comparing(p -> p.toFile().lastModified()));
-        importer.importDataIntoSciforma(pathOfMostRecentFile.get().toFile());
+        File mostRecentFile = pathOfMostRecentFile.get().toFile();
+        log.info("Using file: {}", mostRecentFile);
+        importer.importDataIntoSciforma(mostRecentFile);
     }
 
     private void startFromExecutableJar(String[] args) throws Exception {
@@ -71,6 +73,8 @@ public class ImportJiraTimesheetApplication implements CommandLineRunner {
         }
         Optional<Path> pathOfMostRecentFile = paths.stream()
                 .max(Comparator.comparing(p -> p.toFile().lastModified()));
-        importer.importDataIntoSciforma(pathOfMostRecentFile.get().toFile());
+        File mostRecentFile = pathOfMostRecentFile.get().toFile();
+        log.info("Using file: {}", mostRecentFile);
+        importer.importDataIntoSciforma(mostRecentFile);
     }
 }
