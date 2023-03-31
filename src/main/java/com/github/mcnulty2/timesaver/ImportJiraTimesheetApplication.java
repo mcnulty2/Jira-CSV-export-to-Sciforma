@@ -53,6 +53,7 @@ public class ImportJiraTimesheetApplication implements CommandLineRunner {
             log.info("Several csv files have been found in the folder jira_csv. The most recent will be used.");
         }
         Optional<Path> pathOfMostRecentFile = paths.stream()
+                .peek(p -> log.info(p + " " + p.toFile().lastModified()))
                 .max(Comparator.comparing(p -> p.toFile().lastModified()));
         File mostRecentFile = pathOfMostRecentFile.get().toFile();
         log.info("Using file: {}", mostRecentFile);

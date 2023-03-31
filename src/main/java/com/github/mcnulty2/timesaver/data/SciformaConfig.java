@@ -15,16 +15,14 @@ import java.util.List;
 @ConfigurationProperties(prefix = "sciforma")
 @Configuration
 public class SciformaConfig {
-    private enum SubmitType {AUTO, MANUAL};
-
     private String url;
     private String user;
     private String password;
     private String delimiter;
-    private SubmitType submit;
     private String locale;
     private List<LocalDate> dates;
     private String browser;
+    private String week;
 
     public String getLanguage() {
         return locale.substring(0, 2);
