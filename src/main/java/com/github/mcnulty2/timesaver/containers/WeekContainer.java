@@ -11,11 +11,13 @@ public class WeekContainer {
     }
 
     public static void selectWeek(String weekConfigString) throws InterruptedException {
-        Integer numberWeeks = Integer.valueOf(weekConfigString.substring(1));
-        if (weekConfigString.contains("-")) {
-            clickLeft(numberWeeks);
-        } else if (weekConfigString.contains("+")) {
-            clickRight(numberWeeks);
+        if (!weekConfigString.equals("0")) {
+            Integer numberWeeks = Integer.valueOf(weekConfigString.substring(1));
+            if (weekConfigString.contains("-")) {
+                clickLeft(numberWeeks);
+            } else if (weekConfigString.contains("+")) {
+                clickRight(numberWeeks);
+            }
         }
     }
 

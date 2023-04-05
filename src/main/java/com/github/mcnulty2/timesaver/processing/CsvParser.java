@@ -40,7 +40,7 @@ public class CsvParser {
                 jiraBean.setDate(LocalDate.parse(columns[jiraColumnMappingConfig.getDate()].substring(0, 10)));
                 String project = projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]);
                 if (StringUtils.isEmpty(project)) {
-                    throw new JiraToSciformaException("Componemt not set for: " + jiraBean.getIssue());
+                    throw new JiraToSciformaException("Project column not set for: " + jiraBean.getIssue());
                 } else {
                     jiraBean.setProject(projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]));
                 }
