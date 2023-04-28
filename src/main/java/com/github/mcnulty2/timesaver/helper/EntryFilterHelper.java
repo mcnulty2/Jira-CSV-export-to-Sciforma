@@ -1,6 +1,6 @@
 package com.github.mcnulty2.timesaver.helper;
 
-import com.github.mcnulty2.timesaver.data.JiraBean;
+import com.github.mcnulty2.timesaver.data.JiraData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EntryFilterHelper {
-    private final List<JiraBean> list;
+    private final List<JiraData> list;
 
-    public EntryFilterHelper(List<JiraBean> list) {
+    public EntryFilterHelper(List<JiraData> list) {
         this.list = list;
     }
 
@@ -48,9 +48,9 @@ public class EntryFilterHelper {
         return weeklyIssues;
     }
 
-    private Stream<JiraBean> filterByDateAndProject(String project, LocalDate date) {
+    private Stream<JiraData> filterByDateAndProject(String project, LocalDate date) {
         return list.stream()
-                .filter(jiraBeanEntry -> jiraBeanEntry.getDate().equals(date))
-                .filter(jiraBeanEntry -> jiraBeanEntry.getProject().equals(project));
+                .filter(jiraDataEntry -> jiraDataEntry.getDate().equals(date))
+                .filter(jiraDataEntry -> jiraDataEntry.getProject().equals(project));
     }
 }

@@ -32,6 +32,7 @@ public class ImportJiraTimesheetApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("Software written by Martin McNulty");
         String classPath = getClass().getResource("ImportJiraTimesheetApplication.class").toString();
         if (!classPath.startsWith("jar")) {
             startFromIDE();

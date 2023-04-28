@@ -8,7 +8,7 @@ import com.github.mcnulty2.timesaver.containers.LanguageContainer;
 import com.github.mcnulty2.timesaver.containers.LoginContainer;
 import com.github.mcnulty2.timesaver.containers.WeekContainer;
 import com.github.mcnulty2.timesaver.data.EnumTranslations;
-import com.github.mcnulty2.timesaver.data.JiraBean;
+import com.github.mcnulty2.timesaver.data.JiraData;
 import com.github.mcnulty2.timesaver.data.ProjectMappingConfig;
 import com.github.mcnulty2.timesaver.data.SciformaConfig;
 import com.github.mcnulty2.timesaver.helper.EntryFilterHelper;
@@ -42,7 +42,7 @@ public class SelenideImporter {
 
     public void importDataIntoSciforma(File file) throws Exception {
         // Prepare Config
-        List<JiraBean> list = csvParser.parseFile(file);
+        List<JiraData> list = csvParser.parseFile(file);
         EntryFilterHelper filter = new EntryFilterHelper(list);
 
         // Start Test
@@ -57,7 +57,10 @@ public class SelenideImporter {
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage()));
         for (String project: projectMappingConfig.getUniqueProjects()) {
             HoursContainer.logHoursForProject(project, filter.getWeeklyTimes(project, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
-            IssueContainer.logIssuesForProject(project, filter.getWeeklyIssues(project, sciformaConfig.getDates(), sciformaConfig.getDelimiter()), sciformaConfig.getDates(), sciformaConfig.getLanguage());
+            List<String> weeklyIssuesForProject = filter.getWeeklyIssues(project, sciformaConfig.getDates(), sciformaConfig.getDelimiter());
+            if (!weeklyIssuesForProject.isEmpty()) {
+                IssueContainer.logIssuesForProject(project, weeklyIssuesForProject, sciformaConfig.getDates(), sciformaConfig.getLanguage());
+            }
             Thread.sleep(2000);
         }
         Thread.sleep(200000);

@@ -1,7 +1,7 @@
 package com.github.mcnulty2.timesaver.processing;
 
-import com.github.mcnulty2.timesaver.data.JiraBean;
 import com.github.mcnulty2.timesaver.data.JiraColumnMappingConfig;
+import com.github.mcnulty2.timesaver.data.JiraData;
 import com.github.mcnulty2.timesaver.data.ProjectMappingConfig;
 import com.github.mcnulty2.timesaver.exception.JiraToSciformaException;
 import org.apache.commons.lang3.StringUtils;
@@ -26,25 +26,25 @@ public class CsvParser {
         this.projectMappingConfig = projectMappingConfig;
     }
 
-    public List<JiraBean> parseFile(File file) throws Exception {
-        List<JiraBean> list = new ArrayList<>();
+    public List<JiraData> parseFile(File file) throws Exception {
+        List<JiraData> list = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
             reader.readLine();
             while(reader.ready()) {
                 String line = reader.readLine();
                 line = line.startsWith("\"") ? line.replaceFirst("\"", "") : line;
                 String[] columns = line.split("\"" + jiraColumnMappingConfig.getSeparator() + "\"");
-                JiraBean jiraBean = new JiraBean();
-                jiraBean.setIssue(columns[jiraColumnMappingConfig.getIssue()]);
-                jiraBean.setTime(new BigDecimal(columns[jiraColumnMappingConfig.getTime()]));
-                jiraBean.setDate(LocalDate.parse(columns[jiraColumnMappingConfig.getDate()].substring(0, 10)));
+                JiraData jiraData = new JiraData();
+                jiraData.setIssue(columns[jiraColumnMappingConfig.getIssue()]);
+                jiraData.setTime(new BigDecimal(columns[jiraColumnMappingConfig.getTime()]));
+                jiraData.setDate(LocalDate.parse(columns[jiraColumnMappingConfig.getDate()].substring(0, 10)));
                 String project = projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]);
                 if (StringUtils.isEmpty(project)) {
-                    throw new JiraToSciformaException("Project column not set for: " + jiraBean.getIssue());
+                    throw new JiraToSciformaException("Project column not set for: " + jiraData.getIssue());
                 } else {
-                    jiraBean.setProject(projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]));
+                    jiraData.setProject(projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]));
                 }
-                list.add(jiraBean);
+                list.add(jiraData);
             }
         }
         return list;

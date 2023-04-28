@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class JiraBean {
+public class JiraData {
     private String issue;
     private BigDecimal time;
     private LocalDate date;

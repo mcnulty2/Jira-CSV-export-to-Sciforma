@@ -96,31 +96,4 @@
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>${releaseRepositoryId}</id>
-            <name>${releaseRepositoryName}</name>
-            <url>${releaseRepositoryUrl}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${snapshotRepositoryId}</id>
-            <name>${snapshotRepositoryName}</name>
-            <uniqueVersion>true</uniqueVersion>
-            <url>${snapshotRepositoryUrl}</url>
-        </snapshotRepository>
-    </distributionManagement>
-    <repositories>
-        <repository>
-            <id>maven-public</id>
-            <name>Maven Public Group</name>
-            <url>https://repo.bit.admin.ch/repository/maven-public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>maven-public</id>
-            <name>Maven Public Group</name>
-            <url>https://repo.bit.admin.ch/repository/maven-public/</url>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
