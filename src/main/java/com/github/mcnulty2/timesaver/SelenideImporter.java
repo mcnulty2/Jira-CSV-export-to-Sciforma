@@ -14,6 +14,7 @@ import com.github.mcnulty2.timesaver.data.SciformaConfig;
 import com.github.mcnulty2.timesaver.helper.EntryFilterHelper;
 import com.github.mcnulty2.timesaver.processing.CsvParser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
 
@@ -58,11 +59,15 @@ public class SelenideImporter {
         for (String project: projectMappingConfig.getUniqueProjects()) {
             HoursContainer.logHoursForProject(project, filter.getWeeklyTimes(project, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
             List<String> weeklyIssuesForProject = filter.getWeeklyIssues(project, sciformaConfig.getDates(), sciformaConfig.getDelimiter());
-            if (!weeklyIssuesForProject.isEmpty()) {
+            if (isNotEmpty(weeklyIssuesForProject)) {
                 IssueContainer.logIssuesForProject(project, weeklyIssuesForProject, sciformaConfig.getDates(), sciformaConfig.getLanguage());
             }
             Thread.sleep(2000);
         }
         Thread.sleep(200000);
+    }
+
+    private boolean isNotEmpty(List<String> weeklyIssues) {
+        return weeklyIssues.stream().anyMatch(weekDay -> StringUtils.isNotEmpty(weekDay));
     }
 }
