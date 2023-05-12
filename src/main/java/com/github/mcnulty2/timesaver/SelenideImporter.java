@@ -49,10 +49,9 @@ public class SelenideImporter {
         // Start Test
         open(sciformaConfig.getUrl());
         Thread.sleep(2000);
-        LanguageContainer.setLanguage(sciformaConfig.getLanguage());
-        Thread.sleep(5000);
         LoginContainer.login(sciformaConfig.getUser(), sciformaConfig.getPassword());
         Thread.sleep(2000);
+        sciformaConfig.setLocale(LanguageContainer.detectLocale());
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         WeekContainer.selectWeek(sciformaConfig.getWeek());
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage()));
