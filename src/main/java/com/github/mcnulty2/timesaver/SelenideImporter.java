@@ -16,6 +16,7 @@ import com.github.mcnulty2.timesaver.processing.CsvParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -39,6 +40,11 @@ public class SelenideImporter {
         Configuration.browserSize = "1920x1080";
         Configuration.timeout = 30000;
         Configuration.browser = sciformaConfig.getBrowser();
+        if (Configuration.browser.equals("chrome")) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--remote-allow-origins=*");
+            Configuration.browserCapabilities = options;
+        }
     }
 
     public void importDataIntoSciforma(File file) throws Exception {
@@ -50,7 +56,7 @@ public class SelenideImporter {
         open(sciformaConfig.getUrl());
         Thread.sleep(2000);
         LoginContainer.login(sciformaConfig.getUser(), sciformaConfig.getPassword());
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         sciformaConfig.setLocale(LanguageContainer.detectLocale());
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         WeekContainer.selectWeek(sciformaConfig.getWeek());
