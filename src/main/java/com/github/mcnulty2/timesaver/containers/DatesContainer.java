@@ -4,7 +4,9 @@ import com.github.mcnulty2.timesaver.data.EnumTranslations;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class DatesContainer {
         List<LocalDate> week = new ArrayList<>();
         String monday = $(By.xpath("//div[contains(text(), '" + EnumTranslations.TOTAL.getText(language) + "')]"))
                 .parent().preceding(6).innerText().substring(3);
-        LocalDate mondayDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), Integer.valueOf(monday.trim()));
+        LocalDate mondayDate = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
         week.add(mondayDate);
         week.add(mondayDate.plusDays(1));
         week.add(mondayDate.plusDays(2));
