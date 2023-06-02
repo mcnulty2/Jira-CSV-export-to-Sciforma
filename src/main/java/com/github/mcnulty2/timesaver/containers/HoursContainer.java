@@ -25,8 +25,10 @@ public class HoursContainer {
         for (String hoursForDay: weeklyTimes) {
             if (!hoursForDay.replace(",", ".").equals("0.00")) {
                 Actions a = new Actions(day.getWrappedDriver());
-                while(!day.find("input").exists() || !day.find("input").attr("value").equals(hoursForDay)) {
+                int c = 0;
+                while(c < 10 && (!day.find("input").exists() || !day.find("input").attr("value").equals(hoursForDay))) {
                     a.sendKeys(day, hoursForDay).build().perform();
+                    c++;
                 }
             }
             day = day.sibling(0);
