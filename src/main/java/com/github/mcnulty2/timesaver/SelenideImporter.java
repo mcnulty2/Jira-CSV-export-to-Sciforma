@@ -38,7 +38,7 @@ public class SelenideImporter {
         this.projectMappingConfig = projectMappingConfig;
 
         Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 30000;
+        Configuration.timeout = 60000;
         Configuration.browser = sciformaConfig.getBrowser();
         if (Configuration.browser.equals("chrome")) {
             ChromeOptions options = new ChromeOptions();
@@ -56,7 +56,7 @@ public class SelenideImporter {
         open(sciformaConfig.getUrl());
         Thread.sleep(2000);
         LoginContainer.login(sciformaConfig.getUser(), sciformaConfig.getPassword());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         sciformaConfig.setLocale(LanguageContainer.detectLocale());
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         WeekContainer.selectWeek(sciformaConfig.getWeek());

@@ -4,6 +4,7 @@ import com.github.mcnulty2.timesaver.data.JiraColumnMappingConfig;
 import com.github.mcnulty2.timesaver.data.JiraData;
 import com.github.mcnulty2.timesaver.data.ProjectMappingConfig;
 import com.github.mcnulty2.timesaver.exception.JiraToSciformaException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CsvParser {
     private final JiraColumnMappingConfig jiraColumnMappingConfig;
     private final ProjectMappingConfig projectMappingConfig;
@@ -30,6 +32,7 @@ public class CsvParser {
         List<JiraData> list = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
             reader.readLine();
+            log.info("Project Map: {}", projectMappingConfig.getProjectMap());
             while(reader.ready()) {
                 String line = reader.readLine();
                 line = line.startsWith("\"") ? line.replaceFirst("\"", "") : line;
@@ -38,6 +41,7 @@ public class CsvParser {
                 jiraData.setIssue(columns[jiraColumnMappingConfig.getIssue()]);
                 jiraData.setTime(new BigDecimal(columns[jiraColumnMappingConfig.getTime()]));
                 jiraData.setDate(LocalDate.parse(columns[jiraColumnMappingConfig.getDate()].substring(0, 10)));
+                log.info("Issue: {}, Component: {}", columns[jiraColumnMappingConfig.getIssue()], columns[jiraColumnMappingConfig.getProject()]);
                 String project = projectMappingConfig.getProjectMap().get(columns[jiraColumnMappingConfig.getProject()]);
                 if (StringUtils.isEmpty(project)) {
                     throw new JiraToSciformaException("Project column not set for: " + jiraData.getIssue());
