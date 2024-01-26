@@ -17,21 +17,23 @@ public class HoursContainer {
     }
 
     public static void logHoursForProject(String project, List<String> weeklyTimes) throws InterruptedException {
-        SelenideElement day = $(By.xpath("//div[contains(text(), '" + project + "')]"))
-                .ancestor("tr").sibling(0).find(By.tagName("td")).sibling(1);
-        while (!day.exists() || !day.isDisplayed()) {
-            Thread.sleep(2000);
-        }
-        for (String hoursForDay: weeklyTimes) {
-            if (!hoursForDay.replace(",", ".").equals("0.00")) {
-                Actions a = new Actions(day.getWrappedDriver());
-                int c = 0;
-                while(c < 10 && (!day.find("input").exists() || !day.find("input").attr("value").equals(hoursForDay))) {
-                    a.sendKeys(day, hoursForDay).build().perform();
-                    c++;
-                }
+        SelenideElement projectElem = $(By.xpath("//div[contains(text(), '" + project + "')]"));
+        if (projectElem.exists()) {
+            SelenideElement day = projectElem.ancestor("tr").sibling(0).find(By.tagName("td")).sibling(1);
+            while (!day.exists() || !day.isDisplayed()) {
+                Thread.sleep(2000);
             }
-            day = day.sibling(0);
+            for (String hoursForDay : weeklyTimes) {
+                if (!hoursForDay.replace(",", ".").equals("0.00")) {
+                    Actions a = new Actions(day.getWrappedDriver());
+                    int c = 0;
+                    while (c < 10 && (!day.find("input").exists() || !day.find("input").attr("value").equals(hoursForDay))) {
+                        a.sendKeys(day, hoursForDay).build().perform();
+                        c++;
+                    }
+                }
+                day = day.sibling(0);
+            }
         }
     }
 
