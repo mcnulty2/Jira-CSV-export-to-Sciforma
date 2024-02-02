@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,11 @@ public class DatesContainer {
         List<LocalDate> week = new ArrayList<>();
         String monday = $(By.xpath("//div[contains(text(), '" + EnumTranslations.TOTAL.getText(language) + "')]"))
                 .parent().preceding(6).innerText().substring(3);
-        LocalDate mondayDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), Integer.valueOf(monday.trim()));
+        Month mondayMonth = LocalDate.now().getMonth();
+        if (LocalDate.now().getDayOfMonth() < Integer.valueOf(monday.trim())) {
+            mondayMonth = LocalDate.now().getMonth().minus(1);
+        }
+        LocalDate mondayDate = LocalDate.of(LocalDate.now().getYear(), mondayMonth, Integer.valueOf(monday.trim()));
         week.add(mondayDate);
         week.add(mondayDate.plusDays(1));
         week.add(mondayDate.plusDays(2));
