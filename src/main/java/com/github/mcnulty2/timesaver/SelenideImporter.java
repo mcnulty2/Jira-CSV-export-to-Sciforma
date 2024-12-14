@@ -41,6 +41,7 @@ public class SelenideImporter {
         Configuration.timeout = 60000;
         Configuration.browser = sciformaConfig.getBrowser();
         if (Configuration.browser.equals("chrome")) {
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver");
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
             Configuration.browserCapabilities = options;
@@ -60,7 +61,7 @@ public class SelenideImporter {
         sciformaConfig.setLocale(LanguageContainer.detectLocale());
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         WeekContainer.selectWeek(sciformaConfig.getWeek());
-        sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage()));
+        sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage(), sciformaConfig.getWeek()));
         for (String project: projectMappingConfig.getUniqueProjects()) {
             HoursContainer.logHoursForProject(project, filter.getWeeklyTimes(project, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
             List<String> weeklyIssuesForProject = filter.getWeeklyIssues(project, sciformaConfig.getDates(), sciformaConfig.getDelimiter());
