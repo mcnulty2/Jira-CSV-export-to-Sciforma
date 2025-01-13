@@ -61,6 +61,7 @@ public class SelenideImporter {
         sciformaConfig.setLocale(LanguageContainer.detectLocale());
         $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         WeekContainer.selectWeek(sciformaConfig.getWeek());
+        clickOnShowHiddenIfProjectMissingOnPage(projectMappingConfig.getUniqueProjects());
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage(), sciformaConfig.getWeek()));
         for (String project: projectMappingConfig.getUniqueProjects()) {
             HoursContainer.logHoursForProject(project, filter.getWeeklyTimes(project, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
@@ -73,7 +74,22 @@ public class SelenideImporter {
         Thread.sleep(200000);
     }
 
+    private void clickOnShowHiddenIfProjectMissingOnPage(List<String> uniqueProjects) {
+        boolean projectMissing = false;
+        for (String uniqueProject: uniqueProjects) {
+            if (!$(By.xpath("//div[contains(text(), '" + uniqueProject + "')]")).exists()) {
+                projectMissing = true;
+            }
+        }
+        if (projectMissing) {
+            $(By.xpath("//div[contains(text(), '"
+                    + EnumTranslations.SHOW_HIDDEN.getText(sciformaConfig.getLanguage()) + "')]")).click();
+        }
+    }
+
     private boolean isNotEmpty(List<String> weeklyIssues) {
         return weeklyIssues.stream().anyMatch(weekDay -> StringUtils.isNotEmpty(weekDay));
     }
+
+
 }
