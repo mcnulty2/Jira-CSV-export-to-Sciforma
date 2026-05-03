@@ -16,6 +16,7 @@ import java.util.List;
 @Configuration
 public class SciformaConfig {
     private String url;
+    private String timesheet;
     private String user;
     private String password;
     private String delimiter;

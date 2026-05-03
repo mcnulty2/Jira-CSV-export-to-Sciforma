@@ -1,5 +1,6 @@
 package com.github.mcnulty2.timesaver.containers;
 
+import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
 import com.github.mcnulty2.timesaver.data.EnumTranslations;
 import org.openqa.selenium.By;
@@ -14,8 +15,8 @@ public class LanguageContainer {
 
     public static String detectLocale() throws InterruptedException {
         String locale = "en_us";
-        SelenideElement german = $(By.partialLinkText(EnumTranslations.TIMESHEET.getText("de")));
-        SelenideElement french = $(By.partialLinkText(EnumTranslations.TIMESHEET.getText("fr")));
+        SelenideElement german = $(Selectors.withText(EnumTranslations.WELCOME.getText("de")));
+        SelenideElement french = $(Selectors.withText(EnumTranslations.WELCOME.getText("de")));
         if (german.exists()) {
             locale = "de_ch";
         } else if (french.exists()) {

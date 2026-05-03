@@ -1,12 +1,12 @@
 package com.github.mcnulty2.timesaver.data;
 
 public enum EnumTranslations {
-    TIMESHEET("Timesheet", "Stundenzettel", "Feuille de temps"),
+    WELCOME("Welcome", "Willkommen", "Bienvenue"),
     SHOW_HIDDEN("Show Hidden", "Einblenden", "Masqué"),
     TOTAL("Total", "Gesamt", "Total"),
     DAILY_NOTES("Daily Notes", "Tagesnotizen", "Notes journalières"),
     CLOSE("Close", "Schließen", "Fermer"),
-    OK("OK", "OK", "OK");
+    OK("Ok", "Ok", "Ok");
 
 
     private String textEn;

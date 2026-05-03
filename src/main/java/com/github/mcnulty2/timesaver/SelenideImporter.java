@@ -59,9 +59,10 @@ public class SelenideImporter {
         LoginContainer.login(sciformaConfig.getUser(), sciformaConfig.getPassword());
         Thread.sleep(10000);
         sciformaConfig.setLocale(LanguageContainer.detectLocale());
-        $(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
+        open(sciformaConfig.getTimesheet());
+        //$(By.partialLinkText(EnumTranslations.TIMESHEET.getText(sciformaConfig.getLanguage()))).click();
         WeekContainer.selectWeek(sciformaConfig.getWeek());
-        clickOnShowHiddenIfProjectMissingOnPage(projectMappingConfig.getUniqueProjects());
+        //clickOnShowHiddenIfProjectMissingOnPage(projectMappingConfig.getUniqueProjects());
         sciformaConfig.setDates(DatesContainer.readDates(sciformaConfig.getLanguage(), sciformaConfig.getWeek()));
         for (String project: projectMappingConfig.getUniqueProjects()) {
             HoursContainer.logHoursForProject(project, filter.getWeeklyTimes(project, sciformaConfig.getDates(), sciformaConfig.getLocaleDecimalSeparator()));
